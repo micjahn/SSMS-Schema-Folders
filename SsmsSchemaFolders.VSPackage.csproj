@@ -42,7 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployExtension>False</DeployExtension>
-    <CreateVsixContainer>False</CreateVsixContainer>
+    <CreateVsixContainer>True</CreateVsixContainer>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,7 +51,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CreateVsixContainer>False</CreateVsixContainer>
+    <CreateVsixContainer>True</CreateVsixContainer>
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
@@ -183,6 +183,35 @@
     <Error Condition="!Exists('packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.targets'))" />
   </Target>
   <Import Project="packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>NET SESSION &gt; NUL
+IF %25ERRORLEVEL%25 EQU 0 (
+   ECHO elevated, try copy
+) ELSE (
+   ECHO not elevated
+   EXIT /B 0
+)
+
+if exist "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\" (
+   if not exist "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\" (
+      md "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders"
+   )
+   if not exist "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\de\" (
+      md "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\de"
+   )
+   copy "$(TargetDir)\SsmsSchemaFolders.Interfaces.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.Ssms18.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.Ssms2012.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.Ssms2014.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.Ssms2016.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.Ssms2017.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+   copy "$(TargetDir)\SsmsSchemaFolders.pkgdef" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\"
+
+   copy "$(TargetDir)\de\SsmsSchemaFolders.resources.dll" "C:\Program Files (x86)\Microsoft SQL Server Management Studio 18\Common7\IDE\Extensions\SchemaFolders\de\"
+)
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
