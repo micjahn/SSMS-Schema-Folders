@@ -7,6 +7,8 @@ using System.Windows.Forms;
 
 namespace SsmsSchemaFolders
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Used to organize Databases and Tables in Object Explorer into groups
     /// </summary>
@@ -98,8 +100,30 @@ namespace SsmsSchemaFolders
                 //if (match.Success)
                 //    return match.Groups[1].Value;
 
-                if (ni.InvariantName.EndsWith("." + ni.Name))
-                    return ni.InvariantName.Replace("." + ni.Name, String.Empty);
+                if (Options.RegularExpressions.Count > 0)
+                {
+                    foreach (var pattern in Options.RegularExpressions)
+                    {
+                        if (String.IsNullOrEmpty(pattern))
+                            continue;
+
+                        var match = Regex.Match(ni.InvariantName, pattern, RegexOptions.IgnoreCase);
+                        if (match.Groups.Count > 1)
+                        {
+                            for (var groupIndex = 1; groupIndex < match.Groups.Count; groupIndex++)
+                            {
+                                var group = match.Groups[groupIndex];
+                                if (!string.IsNullOrEmpty(group.Value))
+                                    return group.Value;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (ni.InvariantName.EndsWith("." + ni.Name))
+                        return ni.InvariantName.Replace("." + ni.Name, String.Empty);
+                }
             }
             return null;
         }

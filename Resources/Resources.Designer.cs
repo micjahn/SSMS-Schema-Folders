@@ -115,6 +115,15 @@ namespace SsmsSchemaFolders.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use a list of regular expressions to build the names of the groups from the name of the object (f.e. &quot;^(log)&quot; groups all objects in a folder called log if they start with the same string) ähnelt.
+        /// </summary>
+        internal static string PropertyDescriptionSchemaFolderOptionsRegularExpressions {
+            get {
+                return ResourceManager.GetString("PropertyDescriptionSchemaFolderOptionsRegularExpressions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Remove the schema name from the object node. ähnelt.
         /// </summary>
         internal static string PropertyDescriptionSchemaFolderOptionsRenameNode {
@@ -156,6 +165,15 @@ namespace SsmsSchemaFolders.Resources {
         internal static string PropertyDisplayNameSchemaFolderOptionsEnabled {
             get {
                 return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Build group names by regular expressions ähnelt.
+        /// </summary>
+        internal static string PropertyDisplayNameSchemaFolderOptionsRegularExpressions {
+            get {
+                return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsRegularExpressions", resourceCulture);
             }
         }
         

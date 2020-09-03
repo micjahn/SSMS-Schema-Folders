@@ -1,6 +1,8 @@
 ﻿
 namespace SsmsSchemaFolders
 {
+    using System.Collections.Generic;
+
     public interface ISchemaFolderOptions
     {
         bool Enabled { get; }
@@ -8,5 +10,6 @@ namespace SsmsSchemaFolders
         bool CloneParentNode { get; }
         bool UseObjectIcon { get; }
         bool RenameNode { get; }
+        List<string> RegularExpressions { get; }
     }
 }
