@@ -1,5 +1,7 @@
 ﻿namespace SsmsSchemaFolders
 {
+    using System.ComponentModel;
+
     using Localization;
 
     using Microsoft.VisualStudio.Shell;
