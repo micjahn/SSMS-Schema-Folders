@@ -115,6 +115,15 @@ namespace SsmsSchemaFolders.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die folder names can be left in original case or all changed to lower or upper ähnelt.
+        /// </summary>
+        internal static string PropertyDescriptionSchemaFolderOptionsFolderNameCase {
+            get {
+                return ResourceManager.GetString("PropertyDescriptionSchemaFolderOptionsFolderNameCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Use a list of regular expressions to build the names of the groups from the name of the object (f.e. &quot;^(log)&quot; groups all objects in a folder called log if they start with the same string) ähnelt.
         /// </summary>
         internal static string PropertyDescriptionSchemaFolderOptionsRegularExpressions {
@@ -165,6 +174,15 @@ namespace SsmsSchemaFolders.Resources {
         internal static string PropertyDisplayNameSchemaFolderOptionsEnabled {
             get {
                 return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die original/upper/lower case of folder names ähnelt.
+        /// </summary>
+        internal static string PropertyDisplayNameSchemaFolderOptionsFolderNameCase {
+            get {
+                return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsFolderNameCase", resourceCulture);
             }
         }
         

@@ -11,5 +11,13 @@ namespace SsmsSchemaFolders
         bool UseObjectIcon { get; }
         bool RenameNode { get; }
         List<string> RegularExpressions { get; }
+        FolderNameCase FolderNameCase { get; }
+    }
+
+    public enum FolderNameCase
+    {
+        Original,
+        Lower,
+        Upper
     }
 }

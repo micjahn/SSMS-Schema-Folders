@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
@@ -93,16 +94,29 @@
                             {
                                 var group = match.Groups[groupIndex];
                                 if (!string.IsNullOrEmpty(group.Value))
-                                    return group.Value;
+                                {
+                                    return ModifyCase(group.Value);
+                                }
                             }
                         }
                     }
                 }
                 // Fallback if nothing found by reg expressions
                 if (ni.InvariantName.EndsWith("." + ni.Name))
-                    return ni.InvariantName.Replace("." + ni.Name, String.Empty);
+                {
+                    return ModifyCase(ni.InvariantName.Replace("." + ni.Name, String.Empty));
+                }
             }
             return null;
+        }
+
+        private string ModifyCase(string val)
+        {
+            if (Options.FolderNameCase == FolderNameCase.Lower)
+                val = val.ToLower();
+            if (Options.FolderNameCase == FolderNameCase.Upper)
+                val = val.ToUpper();
+            return val;
         }
 
         /// <summary>
@@ -132,6 +146,7 @@
             //create list of nodes to move then perform the update
 
             var schemas = new Dictionary<String, List<TreeNode>>();
+            var initialNodeCount = node.Nodes.Count;
 
             foreach (TreeNode childNode in node.Nodes)
             {
@@ -152,15 +167,22 @@
                 //create schema node
                 if (!node.Nodes.ContainsKey(schema))
                 {
+                    int insertIndex = initialNodeCount;
+                    for (; insertIndex < node.Nodes.Count; insertIndex++)
+                    {
+                        if (String.CompareOrdinal(node.Nodes[insertIndex].Name, schema) > 0)
+                            break;
+                    }
+
                     TreeNode schemaNode;
                     if (Options.CloneParentNode)
                     {
                         schemaNode = new SchemaFolderTreeNode(node);
-                        node.Nodes.Add(schemaNode);
+                        node.Nodes.Insert(insertIndex, schemaNode);
                     }
                     else
                     {
-                        schemaNode = node.Nodes.Add(schema);
+                        schemaNode = node.Nodes.Insert(insertIndex, schema);
                     }
 
                     schemaNode.Name = schema;
@@ -196,7 +218,8 @@
             foreach (string schema in schemas.Keys)
             {
                 var schemaNode = node.Nodes[schema];
-                foreach (TreeNode childNode in schemas[schema])
+                var orderedSchemaNodes = schemas[schema].OrderBy(_ => _.Name);
+                foreach (TreeNode childNode in orderedSchemaNodes)
                 {
                     node.Nodes.Remove(childNode);
                     if (Options.RenameNode)

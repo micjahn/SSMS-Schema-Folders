@@ -135,6 +135,9 @@
   <data name="PropertyDescriptionSchemaFolderOptionsEnabled" xml:space="preserve">
     <value>Group sql objects in Object Explorer (tables, views, etc.) into schema folders.</value>
   </data>
+  <data name="PropertyDescriptionSchemaFolderOptionsFolderNameCase" xml:space="preserve">
+    <value>folder names can be left in original case or all changed to lower or upper</value>
+  </data>
   <data name="PropertyDescriptionSchemaFolderOptionsRegularExpressions" xml:space="preserve">
     <value>Use a list of regular expressions to build the names of the groups from the name of the object (f.e. "^(log)" groups all objects in a folder called log if they start with the same string)</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="PropertyDisplayNameSchemaFolderOptionsEnabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="PropertyDisplayNameSchemaFolderOptionsFolderNameCase" xml:space="preserve">
+    <value>original/upper/lower case of folder names</value>
   </data>
   <data name="PropertyDisplayNameSchemaFolderOptionsRegularExpressions" xml:space="preserve">
     <value>Build group names by regular expressions</value>

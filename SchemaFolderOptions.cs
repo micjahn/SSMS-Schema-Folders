@@ -50,6 +50,12 @@
         [TypeConverter(typeof(CsvConverter))]
         public List<string> RegularExpressions { get; set; } = new List<string>();
 
+        [CategoryResources(nameof(SchemaFolderOptions) + "FolderDisplayOptions")]
+        [DisplayNameResources(nameof(SchemaFolderOptions) + nameof(FolderNameCase))]
+        [DescriptionResources(nameof(SchemaFolderOptions) + nameof(FolderNameCase))]
+        [DefaultValue(FolderNameCase.Original)]
+        public FolderNameCase FolderNameCase { get; set; }
+
         [Browsable(false)]
         [DefaultValue(null)]
         public string RegularExpressionsSerialized
