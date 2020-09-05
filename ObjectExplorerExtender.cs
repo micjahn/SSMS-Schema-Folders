@@ -1,24 +1,20 @@
-﻿using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
-using System;
-using System.Collections.Generic;
-//using System.Text.RegularExpressions;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace SsmsSchemaFolders
+﻿namespace SsmsSchemaFolders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
     using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+
+    using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 
     /// <summary>
     /// Used to organize Databases and Tables in Object Explorer into groups
     /// </summary>
     public class ObjectExplorerExtender : IObjectExplorerExtender
     {
-
         private ISchemaFolderOptions Options { get; }
         private IServiceProvider Package { get; }
-        //private Regex NodeSchemaRegex;
-
 
         /// <summary>
         /// 
@@ -27,7 +23,6 @@ namespace SsmsSchemaFolders
         {
             Package = package;
             Options = options;
-            //NodeSchemaRegex = new Regex(@"@Schema='((''|[^'])+)'");
         }
 
 
@@ -37,17 +32,13 @@ namespace SsmsSchemaFolders
         /// <returns></returns>
         public TreeView GetObjectExplorerTreeView()
         {
-            var objectExplorerService = (IObjectExplorerService)Package.GetService(typeof(IObjectExplorerService));
+            var objectExplorerService = (IObjectExplorerService) Package.GetService(typeof(IObjectExplorerService));
             if (objectExplorerService != null)
             {
                 var oesTreeProperty = objectExplorerService.GetType().GetProperty("Tree", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase);
                 if (oesTreeProperty != null)
-                    return (TreeView)oesTreeProperty.GetValue(objectExplorerService, null);
-                //else
-                //    debug_message("Object Explorer Tree property not found.");
+                    return (TreeView) oesTreeProperty.GetValue(objectExplorerService, null);
             }
-            //else
-            //    debug_message("objectExplorerService == null");
 
             return null;
         }
@@ -65,7 +56,6 @@ namespace SsmsSchemaFolders
             if (serviceProvider != null)
             {
                 result = (serviceProvider.GetService(typeof(INodeInformation)) as INodeInformation);
-                //debug_message("NodeInformation\n UrnPath:{0}\n Name:{1}\n InvariantName:{2}\n Context:{3}\n NavigationContext:{4}", ni.UrnPath, ni.Name, ni.InvariantName, ni.Context, ni.NavigationContext);
             }
             return result;
         }
@@ -75,17 +65,13 @@ namespace SsmsSchemaFolders
             var lazyNode = node as ILazyLoadingNode;
             if (lazyNode != null)
                 return lazyNode.Expanding;
-            else
-                return false;
+            return false;
         }
 
         public string GetNodeUrnPath(TreeNode node)
         {
             var ni = GetNodeInformation(node);
-            if (ni != null)
-                return ni.UrnPath;
-            else
-                return null;
+            return ni?.UrnPath;
         }
 
         private String GetNodeSchema(TreeNode node)
@@ -93,13 +79,6 @@ namespace SsmsSchemaFolders
             var ni = GetNodeInformation(node);
             if (ni != null)
             {
-                // parse ni.Context = Server[@Name='NR-DEV\SQL2008R2EXPRESS']/Database[@Name='tempdb']/Table[@Name='test.''escape''[value]' and @Schema='dbo']
-                // or compare ni.Name vs ni.InvariantName = ObjectName vs SchemaName.ObjectName
-
-                //var match = NodeSchemaRegex.Match(ni.Context);
-                //if (match.Success)
-                //    return match.Groups[1].Value;
-
                 if (Options.RegularExpressions.Count > 0)
                 {
                     foreach (var pattern in Options.RegularExpressions)
@@ -119,11 +98,9 @@ namespace SsmsSchemaFolders
                         }
                     }
                 }
-                else
-                {
-                    if (ni.InvariantName.EndsWith("." + ni.Name))
-                        return ni.InvariantName.Replace("." + ni.Name, String.Empty);
-                }
+                // Fallback if nothing found by reg expressions
+                if (ni.InvariantName.EndsWith("." + ni.Name))
+                    return ni.InvariantName.Replace("." + ni.Name, String.Empty);
             }
             return null;
         }
@@ -146,12 +123,8 @@ namespace SsmsSchemaFolders
         /// <returns>The count of schema nodes.</returns>
         public int ReorganizeNodes(TreeNode node, string nodeTag)
         {
-            debug_message("ReorganizeNodes");
-
             if (node.Nodes.Count <= 1)
                 return 0;
-
-            //debug_message(DateTime.Now.ToString("ss.fff"));
 
             node.TreeView.BeginUpdate();
 
@@ -219,8 +192,6 @@ namespace SsmsSchemaFolders
                 schemaNodeList.Add(childNode);
             }
 
-            //debug_message(DateTime.Now.ToString("ss.fff"));
-
             //move nodes to schema node
             foreach (string schema in schemas.Keys)
             {
@@ -239,27 +210,7 @@ namespace SsmsSchemaFolders
 
             node.TreeView.EndUpdate();
 
-            //debug_message(DateTime.Now.ToString("ss.fff"));
-
             return schemas.Count;
         }
-
-        private void debug_message(string message)
-        {
-            if (Package is IDebugOutput)
-            {
-                ((IDebugOutput)Package).debug_message(message);
-            }
-        }
-
-        private void debug_message(string message, params object[] args)
-        {
-            if (Package is IDebugOutput)
-            {
-                ((IDebugOutput)Package).debug_message(message, args);
-            }
-        }
-
     }
-
 }

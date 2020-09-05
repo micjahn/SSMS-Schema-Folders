@@ -261,12 +261,8 @@ namespace SsmsSchemaFolders
                 if (_objectExplorerExtender.GetNodeExpanding(e.Node))
                 {
                     debug_message("node.Expanding");
-                    //debug_message(DateTime.Now.ToString("ss.fff"));
                     var waitCount = 0;
 
-                    //IExplorerHierarchy.EndAsynchronousUpdate += New EventHandler();
-
-                    //e.Node.TreeView.Cursor = Cursors.WaitCursor;
                     e.Node.TreeView.Cursor = Cursors.AppStarting;
 
                     var nodeExpanding = new Timer();
@@ -279,7 +275,6 @@ namespace SsmsSchemaFolders
                         if (e.Node.TreeView.InvokeRequired)
                             debug_message("TreeView.InvokeRequired");
                         debug_message("Node.Count:{0}", e.Node.GetNodeCount(false));
-                        //debug_message(DateTime.Now.ToString("ss.fff"));
 
                         if (!_objectExplorerExtender.GetNodeExpanding(e.Node))
                         {
@@ -291,19 +286,9 @@ namespace SsmsSchemaFolders
 
                             e.Node.TreeView.Cursor = Cursors.Default;
                         }
-                        else
-                        {
-                            //ReorganizeFolders(e.Node);
-                        }
-                        //debug_message("Node.Count2:{0}", e.Node.GetNodeCount(false));
                     };
                     nodeExpanding.Tick += nodeExpandingEvent;
                     nodeExpanding.Start();
-
-                }
-                else
-                {
-                    //ReorganizeFolders(e.Node, true);
                 }
             }
             catch (Exception ex)
