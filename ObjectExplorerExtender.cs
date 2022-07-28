@@ -104,7 +104,7 @@
                 // Fallback if nothing found by reg expressions
                 if (ni.InvariantName.EndsWith("." + ni.Name))
                 {
-                    return ModifyCase(ni.InvariantName.Replace("." + ni.Name, String.Empty));
+                    return ModifyCase(ni.InvariantName.Substring(0, ni.InvariantName.Length - ni.Name.Length - 1));
                 }
             }
             return null;
