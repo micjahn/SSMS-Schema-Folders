@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -197,6 +198,7 @@
                 if (!node.Nodes.ContainsKey(schema))
                 {
                     int insertIndex = initialNodeCount;
+                    // TODO: check if sorting here works with ...
                     for (; insertIndex < node.Nodes.Count; insertIndex++)
                     {
                         if (String.CompareOrdinal(node.Nodes[insertIndex].Name, schema) > 0)
@@ -251,12 +253,14 @@
                         return 0;
                     node.TreeView.BeginUpdate();
                     unresponsive.Restart();
+                }
             }
 
             //debug_message("Move Nodes:{0}", sw.ElapsedMilliseconds);
 
             if (schemaNodeIndex >= 0)
             {
+                // TODO: ... with this merged code block
                 // Move schema nodes to top of tree
                 foreach (var schemaNode in newSchemaNodes)
                 {
