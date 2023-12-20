@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<Fragment>
+    <Property Id="SSMS18INSTALLROOT">
+      <RegistrySearch
+        Id="SSMS18INSTALLROOT"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\Microsoft SQL Server Management Studio\18"
+        Name="SSMSInstallRoot"
+        Type="raw" />
+    </Property>
+    <Property Id="SSMS19INSTALLROOT">
+      <RegistrySearch
+        Id="SSMS19INSTALLROOT"
+        Root="HKLM"
+        Key="SOFTWARE\Microsoft\Microsoft SQL Server Management Studio\19"
+        Name="SSMSInstallRoot"
+        Type="raw" />
+    </Property>
+  </Fragment>
+</Wix>

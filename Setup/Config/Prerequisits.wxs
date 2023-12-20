@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+   <?include $(sys.CURRENTDIR)Directories.wxi?>
+   <?include $(var.ConfigDir)Config.wxi?>
+   <Fragment>
+      <Property Id="Prerequisits" Value="{8ED29902-9055-4F7E-A2F4-94C58381AB60}" />
+   </Fragment>
+</Wix>

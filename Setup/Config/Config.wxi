@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+   <?if $(var.Platform) = x64 ?>
+   <?define ProductCode = "{C27002A1-C659-44BE-AC65-A0EB2E4864D9}" ?>
+   <?else ?>
+   <?define ProductCode = "{64AA6819-FF25-412D-B078-EE816F35B094}" ?>
+   <?endif ?>
+
+   <?define UpgradeCode = "{BE7E0544-A6E8-43E1-BBFA-0002440AE7B3}" ?>
+
+   <?define ProductName =  "SSMS Schema Folders" ?>
+
+   <?define ShortcutName =  "SSMS Schema Folders" ?>
+
+   <?define InstallName = "SSMS Schema Folders" ?>
+
+   <!-- Registry key name used to store installation location -->
+   <?define InstallNameKey = "SSMS Schema Folders" ?>
+
+   <?define WebInstallName = "SSMS Schema Folders"?>
+
+   <?define ProgramMenuFolder = "SSMS Schema Folders"?>
+
+   <?define SetupIcon="$(var.ResourcesDir)Icons\SsmsSchemaFoldersPackage.ico"?>
+</Include>
