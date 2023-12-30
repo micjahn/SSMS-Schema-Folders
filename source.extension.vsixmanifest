@@ -22,4 +22,7 @@
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
   </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.Component.NetFX.Native" Version="[16.5.29515.121,17.0)" DisplayName=".NET Native" />
+    </Prerequisites>
 </PackageManifest>

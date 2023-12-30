@@ -73,6 +73,12 @@
         [DefaultValue(FolderNameCase.Original)]
         public FolderNameCase FolderNameCase { get; set; }
 
+        [CategoryResources(nameof(SchemaFolderOptions) + "Active")]
+        [DisplayNameResources(nameof(SchemaFolderOptions) + nameof(EnableDebugOutput))]
+        [DescriptionResources(nameof(SchemaFolderOptions) + nameof(EnableDebugOutput))]
+        [DefaultValue(false)]
+        public bool EnableDebugOutput { get; set; } = false;
+
         [Browsable(false)]
         [DefaultValue(null)]
         public string RegularExpressionsSerialized

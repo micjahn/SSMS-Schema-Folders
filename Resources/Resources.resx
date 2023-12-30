@@ -189,4 +189,10 @@
   <data name="PropertyDisplayNameSchemaFolderOptionsUseObjectIcon" xml:space="preserve">
     <value>Use Object Icon</value>
   </data>
+  <data name="PropertyDescriptionSchemaFolderOptionsEnableDebugOutput" xml:space="preserve">
+    <value>Show separate debug output pane</value>
+  </data>
+  <data name="PropertyDisplayNameSchemaFolderOptionsEnableDebugOutput" xml:space="preserve">
+    <value>Show separate debug output pane</value>
+  </data>
 </root>

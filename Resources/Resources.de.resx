@@ -135,6 +135,9 @@
   <data name="PropertyDescriptionSchemaFolderOptionsEnabled" xml:space="preserve">
     <value>Aktiviert das Gruppieren von SQL Objekten (Tabellen, Views, etc.) in Ordner mit dem Namen des Schemas im Objekt Explorer.</value>
   </data>
+  <data name="PropertyDescriptionSchemaFolderOptionsEnableDebugOutput" xml:space="preserve">
+    <value>Zeigt ein separates Fenster mit Debug-Ausgaben an</value>
+  </data>
   <data name="PropertyDescriptionSchemaFolderOptionsFolderNameCase" xml:space="preserve">
     <value>Die Ordnernamen können im Originalschreibweise oder in Klein- oder Großschreibweise dargestellt werden</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="PropertyDisplayNameSchemaFolderOptionsEnabled" xml:space="preserve">
     <value>Aktiviert</value>
+  </data>
+  <data name="PropertyDisplayNameSchemaFolderOptionsEnableDebugOutput" xml:space="preserve">
+    <value>Separates Fenster mit Debug-Ausgaben</value>
   </data>
   <data name="PropertyDisplayNameSchemaFolderOptionsFolderNameCase" xml:space="preserve">
     <value>Groß-/Kleinschreibung der Ordner</value>

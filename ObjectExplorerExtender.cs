@@ -45,6 +45,48 @@
             return null;
         }
 
+        public void RefreshTableNode()
+        {
+            var objectExplorer = (IObjectExplorerService)Package.GetService(typeof(IObjectExplorerService));
+            var treeView = GetObjectExplorerTreeView();
+
+            if (treeView != null)
+            {
+                foreach (TreeNode node in treeView.Nodes)
+                {
+                    if (RefreshTableNodebyNode(objectExplorer, node))
+                        break;
+                }
+            }
+        }
+
+        private bool RefreshTableNodebyNode(IObjectExplorerService objectExplorer, TreeNode node)
+        {
+            if (node.IsExpanded && NodeIsDatabaseNode(node))
+            {
+                var nodeInformation = GetNodeInformation(node);
+                objectExplorer.SynchronizeTree(nodeInformation);
+                SendKeys.Send("{F5}");
+                return true;
+            }
+
+            foreach (TreeNode childNode in node.Nodes)
+            {
+                if (RefreshTableNodebyNode(objectExplorer, childNode))
+                    return true;
+            }
+            return false;
+        }
+        private bool NodeIsDatabaseNode(TreeNode node)
+        {
+            if (node?.Parent != null)
+            {
+                var urnPath = GetNodeUrnPath(node);
+                return urnPath == "Server/Database";
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gets node information from underlying type of tree node view
         /// </summary>
@@ -438,15 +480,6 @@
             sw.Stop();
 
             return schemas.Count;
-        }
-
-        [System.Diagnostics.Conditional("DEBUG")]
-        private void debug_message(string message)
-        {
-            if (Package is IDebugOutput)
-            {
-                ((IDebugOutput)Package).debug_message(message);
-            }
         }
 
         [System.Diagnostics.Conditional("DEBUG")]

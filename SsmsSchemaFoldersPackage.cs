@@ -7,6 +7,7 @@ extern alias Ssms19;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
+using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -35,6 +36,7 @@ namespace SsmsSchemaFolders
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(SsmsSchemaFoldersPackage.PackageGuidString)]
     [ProvideAutoLoad("d114938f-591c-46cf-a785-500a82d97410")] //CommandGuids.ObjectExplorerToolWindowIDString
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideOptionPage(typeof(SchemaFolderOptions), "SQL Server Object Explorer", "Schema Folders", 114, 116, true)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class SsmsSchemaFoldersPackage : Package, IDebugOutput
@@ -90,6 +92,15 @@ namespace SsmsSchemaFolders
             if (_objectExplorerExtender != null)
                 AttachTreeViewEvents();
 
+            ToggleDebugOutput();
+
+            var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (null != mcs)
+            {
+                var id = new CommandID(PkgCmdIDList.GuidMenuAndCommandsCmdSet, PkgCmdIDList.cmdidToggleCommand);
+                var command = new OleMenuCommand(new EventHandler(CommandToggleSchemaFolders), id);
+                mcs.AddCommand(command);
+            }
         }
 
         private void DelayAddSkipLoadingReg()
@@ -105,6 +116,14 @@ namespace SsmsSchemaFolders
             };
             delay.Interval = 1000;
             delay.Start();
+        }
+
+        private void CommandToggleSchemaFolders(object caller, EventArgs args)
+        {
+            debug_message("toggle schema folders");
+            Options.Enabled = !Options.Enabled;
+            debug_message("Enabled: " + Options.Enabled);
+            _objectExplorerExtender.RefreshTableNode();
         }
 
         private IObjectExplorerExtender GetObjectExplorerExtender()
@@ -330,20 +349,16 @@ namespace SsmsSchemaFolders
             
         }
 
-        public void debug_message(string message)
-        {
-            if (_outputWindowPane != null)
-            {
-                _outputWindowPane.OutputString(message);
-                _outputWindowPane.OutputString("\r\n");
-            }
-        }
-
         public void debug_message(string message, params object[] args)
         {
+            ToggleDebugOutput();
+
             if (_outputWindowPane != null)
             {
-                _outputWindowPane.OutputString(String.Format(message, args));
+                if (args == null || args.Length < 1)
+                    _outputWindowPane.OutputString(message);
+                else
+                    _outputWindowPane.OutputString(String.Format(message, args));
                 _outputWindowPane.OutputString("\r\n");
             }
         }
@@ -364,5 +379,35 @@ namespace SsmsSchemaFolders
                 SsmsSchemaFoldersPackage.PackageGuid);
         }
 
+        private void ToggleDebugOutput()
+        {
+            if (Options.EnableDebugOutput)
+            {
+                if (_outputWindowPane == null)
+                {
+                    // OutputWindowPane for debug messages
+                    var outputWindow = (IVsOutputWindow)GetService(typeof(SVsOutputWindow));
+                    var guidPackage = PackageGuid;
+                    outputWindow.CreatePane(PackageGuid, "Database Folders debug output", 1, 0);
+                    outputWindow.GetPane(ref guidPackage, out _outputWindowPane);
+                }
+            }
+            else
+            {
+                if (_outputWindowPane != null)
+                {
+                    var outputWindow = (IVsOutputWindow)GetService(typeof(SVsOutputWindow));
+                    var guidPackage = PackageGuid;
+                    outputWindow.DeletePane(ref guidPackage);
+                    _outputWindowPane = null;
+                }
+            }
+        }
+
+        internal static class PkgCmdIDList
+        {
+            public static Guid GuidMenuAndCommandsCmdSet = new Guid("BCAA5C7B-F503-4D3C-9EC3-4AA1ED9CF766");
+            public const int cmdidToggleCommand = 0x2001;
+        }
     }
 }

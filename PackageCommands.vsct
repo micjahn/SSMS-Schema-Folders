@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+
+  <Commands package="guidMenuAndCommandsPkg">
+    <Groups>
+      <Group guid="guidMenuAndCommandsCmdSet" id="MyMainToolbarGroup" priority="0x100">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_STANDARD"/>
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidMenuAndCommandsCmdSet" id="cmdidToggleCommand" priority="0x100" type="Button">
+        <Parent guid="guidMenuAndCommandsCmdSet" id="MyMainToolbarGroup"/>
+        <Icon guid="ImageCatalogGuid" id="TreeView"/>
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>Toggle Schema Folder</ButtonText>
+        </Strings>
+      </Button>
+
+    </Buttons>
+  </Commands>
+
+
+  <Symbols>
+    <GuidSymbol name="CustomMoniker" value="{F4933A58-14E6-466B-80F8-D48E5114870A}">
+      <IDSymbol name="Application" value="1" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidMenuAndCommandsPkg" value="{a88a775f-7c86-4a09-b5a6-890c4c38261b}" />
+    
+    <GuidSymbol name="guidMenuAndCommandsCmdSet" value="{BCAA5C7B-F503-4D3C-9EC3-4AA1ED9CF766}">
+      <IDSymbol name="MyMainToolbarGroup" value="0x101" />
+      <IDSymbol name="cmdidToggleCommand" value="0x2001" />
+    </GuidSymbol>
+
+  </Symbols>
+</CommandTable>
