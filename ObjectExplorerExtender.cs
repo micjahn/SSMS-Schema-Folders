@@ -186,14 +186,15 @@
         /// </summary>
         /// <param name="node">Table node to reorganize</param>
         /// <param name="nodeTag">Tag of new node</param>
+        /// <param name="expanding">Executing in AfterExpand event</param>
         /// <returns>The count of schema nodes.</returns>
-        public int ReorganizeNodes(TreeNode node, string nodeTag)
+        public int ReorganizeNodes(TreeNode node, string nodeTag, bool expanding)
         {
             if (node.Nodes.Count <= 1)
                 return 0;
             
             if (Options.UseClear > 0 && node.Nodes.Count >= Options.UseClear)
-                return ReorganizeNodesWithClear(node, nodeTag);
+                return ReorganizeNodesWithClear(node, nodeTag, expanding);
 
             var nodeText = node.Text;
             node.Text += " (sorting...)";
@@ -287,7 +288,7 @@
                 }
                 schemaNodeList.Add(childNode);
 
-                if (unresponsive.ElapsedMilliseconds > Options.UnresponsiveTimeout)
+                if (expanding && unresponsive.ElapsedMilliseconds > Options.UnresponsiveTimeout)
                 {
                     node.TreeView.EndUpdate();
                     Application.DoEvents();
@@ -327,7 +328,7 @@
                     }
                     schemaNode.Nodes.Add(childNode);
 
-                    if (unresponsive.ElapsedMilliseconds > Options.UnresponsiveTimeout)
+                    if (expanding && unresponsive.ElapsedMilliseconds > Options.UnresponsiveTimeout)
                     {
                         node.TreeView.EndUpdate(); 
                         Application.DoEvents();
@@ -356,8 +357,9 @@
         /// </summary>
         /// <param name="node">Table node to reorganize</param>
         /// <param name="nodeTag">Tag of new node</param>
+        /// <param name="expanding">Executing in AfterExpand event</param>
         /// <returns>The count of schema nodes.</returns>
-        public int ReorganizeNodesWithClear(TreeNode node, string nodeTag)
+        public int ReorganizeNodesWithClear(TreeNode node, string nodeTag, bool expanding)
         {
             debug_message("ReorganizeNodesWithClear");
 
@@ -450,7 +452,7 @@
 
             //debug_message("DoEvents:{0}", sw.ElapsedMilliseconds);
 
-            if (sw.ElapsedMilliseconds > Options.UnresponsiveTimeout)
+            if (expanding && sw.ElapsedMilliseconds > Options.UnresponsiveTimeout)
             {
                 Application.DoEvents();
                 if (node.TreeView == null)
