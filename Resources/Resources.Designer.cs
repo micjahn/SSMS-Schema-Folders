@@ -133,11 +133,29 @@ namespace SsmsSchemaFolders.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hold the modifier keys down to do the opposite of the Enabled setting. The letter key (or None) in the setting is not used but is required by the settings editor. To change a folder that has already been opened, right-click the folder and select refresh while holding the keys. ähnelt.
+        /// </summary>
+        internal static string PropertyDescriptionSchemaFolderOptionsEnabledModifierKeys {
+            get {
+                return ResourceManager.GetString("PropertyDescriptionSchemaFolderOptionsEnabledModifierKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die folder names can be left in original case or all changed to lower or upper ähnelt.
         /// </summary>
         internal static string PropertyDescriptionSchemaFolderOptionsFolderNameCase {
             get {
                 return ResourceManager.GetString("PropertyDescriptionSchemaFolderOptionsFolderNameCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The type of sorting to use to create the folders. ähnelt.
+        /// </summary>
+        internal static string PropertyDescriptionSchemaFolderOptionsLevel1FolderType {
+            get {
+                return ResourceManager.GetString("PropertyDescriptionSchemaFolderOptionsLevel1FolderType", resourceCulture);
             }
         }
         
@@ -232,11 +250,29 @@ namespace SsmsSchemaFolders.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modifier Keys ähnelt.
+        /// </summary>
+        internal static string PropertyDisplayNameSchemaFolderOptionsEnabledModifierKeys {
+            get {
+                return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsEnabledModifierKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die original/upper/lower case of folder names ähnelt.
         /// </summary>
         internal static string PropertyDisplayNameSchemaFolderOptionsFolderNameCase {
             get {
                 return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsFolderNameCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Folder Type ähnelt.
+        /// </summary>
+        internal static string PropertyDisplayNameSchemaFolderOptionsLevel1FolderType {
+            get {
+                return ResourceManager.GetString("PropertyDisplayNameSchemaFolderOptionsLevel1FolderType", resourceCulture);
             }
         }
         

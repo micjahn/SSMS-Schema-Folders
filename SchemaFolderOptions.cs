@@ -8,6 +8,8 @@
 
     using Localization;
     using Microsoft.VisualStudio.Shell;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Design;
 
     public class SchemaFolderOptions : DialogPage, ISchemaFolderOptions
     {
@@ -16,6 +18,13 @@
         [DescriptionResources(nameof(SchemaFolderOptions) + nameof(Enabled))]
         [DefaultValue(true)]
         public bool Enabled { get; set; } = true;
+
+        [CategoryResources(nameof(SchemaFolderOptions) + "Active")]
+        [DisplayNameResources(nameof(SchemaFolderOptions) + nameof(EnabledModifierKeys))]
+        [DescriptionResources(nameof(SchemaFolderOptions) + nameof(EnabledModifierKeys))]
+        [DefaultValue(Keys.Control)]
+        //[Editor(typeof(ShortcutKeysEditor), typeof(UITypeEditor))]
+        public Keys EnabledModifierKeys { get; set; } = Keys.Control;
 
         [CategoryResources(nameof(SchemaFolderOptions) + "FolderDisplayOptions")]
         [DisplayNameResources(nameof(SchemaFolderOptions) + nameof(AppendDot))]
