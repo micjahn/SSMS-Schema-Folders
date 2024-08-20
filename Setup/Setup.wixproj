@@ -123,6 +123,14 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\..\SSMS-Schema-Folders\SsmsSchemaFolders.Ssms20.csproj">
+      <Name>SsmsSchemaFolders.Ssms20</Name>
+      <Project>{f072bb37-cbc5-487b-af5c-61c8f19fc03c}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\..\SSMS-Schema-Folders\SsmsSchemaFolders.Ssms2012.csproj">
       <Name>SsmsSchemaFolders.Ssms2012</Name>
       <Project>{9c9fa743-0d5d-4847-9544-3ad0ffbad79f}</Project>
