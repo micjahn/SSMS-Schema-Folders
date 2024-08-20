@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SSMS Schema Folders")]
+[assembly: AssemblyTitle("SSMS Schema Folders MJ")]
 [assembly: AssemblyDescription("A plugin for SSMS.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://github.com/nicholas-ross/SSMS-Schema-Folders")]
-[assembly: AssemblyProduct("SSMS Schema Folders")]
+[assembly: AssemblyCompany("https://github.com/micjahn/SSMS-Schema-Folders")]
+[assembly: AssemblyProduct("SSMS Schema Folders MJ")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,21 +1,22 @@
 
-# [SSMS Schema Folders](https://github.com/nicholas-ross/SSMS-Schema-Folders)
+# [SSMS Schema Folders MJ](https://github.com/micjahn/SSMS-Schema-Folders/)
 
 This an extension for SQL Server Management Studio 2012, 2014, 2016, 17, 18, 19 and 20.
 It groups sql objects in Object Explorer (tables, views, etc.) into schema folders.
 
 ![Object Explorer](ObjectExplorerView.png)
 
-Source code, documentation and issues can be found at <https://github.com/nicholas-ross/SSMS-Schema-Folders>
+Source code, documentation and issues can be found at <https://github.com/micjahn/SSMS-Schema-Folders>
 
-This is a fork of [SSMS2012Extender](https://github.com/NotExperiencedDev/SSMSExtension) (from when it was on CodePlex) that adds support for SSMS 2014 and 2016.
+This is a fork of [SSMS-Schema-Folders](https://github.com/nicholas-ross/SSMS-Schema-Folders)
+which is a fork of [SSMS2012Extender](https://github.com/NotExperiencedDev/SSMSExtension) (from when it was on CodePlex) that adds support for SSMS 2014 and 2016.
 
 You can download the latest version of SSMS for free from [Microsoft](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms).
 
 
 ## Install
 
-[Download the latest release from the releases page.](https://github.com/nicholas-ross/SSMS-Schema-Folders/releases)
+[Download the latest release from the releases page.](https://github.com/micjahn/SSMS-Schema-Folders/releases)
 
 You must unblock the zip file before extracting. Right click on the zip file in Windows Explorer and select Properties. 
 If you see an `Unblock` button or checkbox then click it. 
@@ -63,8 +64,15 @@ In SSMS 17 and earlier, the first time it is run with the extension it will show
 This extension moves nodes in the Object Explorer tree view. This could cause problems with other extensions that are not expecting it. If you do have problems then let me know.
 * Red Gate SQL Search - When trying to select the object in Object Explorer from the search results, it will loop through the nodes comparing the node text. It doesn't check subfolders for most object types so will be unable to select the correct object.
 
-Please report any issues to <https://github.com/nicholas-ross/SSMS-Schema-Folders/issues>.
+Please report any issues to <https://github.com/micjahn/SSMS-Schema-Folders/issues>.
 
+## Change Log MJ fork
+
+### v1.6 (2024-08-20)
+* Added support for Regular Expressions
+* Added toolbar button for enable/disable the extension
+* Added MSI setup file
+* other small changes which I can't remember
 
 ## Change Log
 

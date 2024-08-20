@@ -1,0 +1,12 @@
+SsmsSchemaFolders.Interfaces.dll
+SsmsSchemaFolders.Ssms18.dll
+SsmsSchemaFolders.Ssms19.dll
+SsmsSchemaFolders.Ssms20.dll
+SsmsSchemaFolders.Ssms2012.dll
+SsmsSchemaFolders.Ssms2014.dll
+SsmsSchemaFolders.Ssms2016.dll
+SsmsSchemaFolders.Ssms2017.dll
+SsmsSchemaFolders.dll
+SsmsSchemaFolders.pkgdef
+extension.vsixmanifest
+de\SsmsSchemaFolders.VSPackage.resources.dll
