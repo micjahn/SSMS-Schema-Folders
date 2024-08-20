@@ -245,6 +245,8 @@ namespace SsmsSchemaFolders
                             default:
                                 // Server/DatabasesFolder
                                 // Server/Database
+                                // Server/JobServer
+                                // Server/JobServer/JobsFolder
                                 debug_message(urnPath);
                                 break;
                         }
@@ -253,7 +255,9 @@ namespace SsmsSchemaFolders
             }
             catch (Exception ex)
             {
-                ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, ex.ToString());
+                var error = ex.ToString();
+                ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, error);
+                MessageBox.Show(error, "SSMS Schema Folders", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -265,7 +269,7 @@ namespace SsmsSchemaFolders
         /// <param name="e">expanding node</param>
         void ObjectExplorerTreeViewAfterExpandCallback(object sender, TreeViewEventArgs e)
         {
-            debug_message("\nObjectExplorerTreeViewAfterExpandCallback");
+            debug_message("\nObjectExplorerTreeViewAfterExpandCallback:{0}", e.Node.Text);
             // Wait for the async node expand to finish or we could miss nodes
             try
             {
@@ -324,15 +328,17 @@ namespace SsmsSchemaFolders
         /// <param name="e"></param>
         void ObjectExplorerTreeViewBeforeExpandCallback(object sender, TreeViewCancelEventArgs e)
         {
-            debug_message("\nObjectExplorerTreeViewBeforeExpandCallback");
+            debug_message("\nObjectExplorerTreeViewBeforeExpandCallback:{0}", e.Node.Text);
             try
             {
                 if (!Options.Enabled)
                     return;
 
-                debug_message("Node.Count:{0}", e.Node.GetNodeCount(false));
+                var nodeCount = e.Node.GetNodeCount(false);
 
-                if (e.Node.GetNodeCount(false) == 1)
+                debug_message("Node.Count:{0}", nodeCount);
+
+                if (nodeCount == 1)
                     return;
 
                 if (_objectExplorerExtender.GetNodeExpanding(e.Node))
@@ -344,9 +350,11 @@ namespace SsmsSchemaFolders
             }
             catch (Exception ex)
             {
-                ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, ex.ToString());
+                var error = ex.ToString();
+                ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, error);
+                MessageBox.Show(error, "SSMS Schema Folders", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
 
         public void debug_message(string message, params object[] args)
@@ -368,6 +376,7 @@ namespace SsmsSchemaFolders
             debug_message(message);
 
             // Logs to %AppData%\Microsoft\VisualStudio\14.0\ActivityLog.XML.
+            // Logs to %AppData%\Microsoft\AppEnv\15.0\ActivityLog.XML.
             // Recommended to obtain the activity log just before writing to it. Do not cache or save the activity log for future use.
             var log = GetService(typeof(SVsActivityLog)) as IVsActivityLog;
             if (log == null) return;
