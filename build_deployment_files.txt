@@ -9,4 +9,4 @@ SsmsSchemaFolders.Ssms2017.dll
 SsmsSchemaFolders.dll
 SsmsSchemaFolders.pkgdef
 extension.vsixmanifest
-de\SsmsSchemaFolders.VSPackage.resources.dll
+de\SsmsSchemaFolders.resources.dll
