@@ -1,21 +1,18 @@
-﻿extern alias Ssms2012;
-extern alias Ssms2014;
-extern alias Ssms2016;
-extern alias Ssms2017;
-extern alias Ssms18;
-extern alias Ssms19;
-extern alias Ssms20;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using System;
-using System.ComponentModel.Design;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
-namespace SsmsSchemaFolders
+﻿namespace SsmsSchemaFolders
 {
+    extern alias Ssms18;
+    extern alias Ssms19;
+    extern alias Ssms20;
+    extern alias Ssms21;
+    using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
+    using System;
+    using System.ComponentModel.Design;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// </summary>
@@ -104,21 +101,6 @@ namespace SsmsSchemaFolders
             }
         }
 
-        private void DelayAddSkipLoadingReg()
-        {
-            // Reg setting is only required for 2017 and earlier.
-            // Reg setting is removed after initialize. Wait short delay then recreate it.
-            var delay = new Timer();
-            delay.Tick += delegate (object o, EventArgs e)
-            {
-                delay.Stop();
-                var myPackage = this.UserRegistryRoot.CreateSubKey(@"Packages\{" + SsmsSchemaFoldersPackage.PackageGuidString + "}");
-                myPackage.SetValue("SkipLoading", 1);
-            };
-            delay.Interval = 1000;
-            delay.Start();
-        }
-
         private void CommandToggleSchemaFolders(object caller, EventArgs args)
         {
             debug_message("toggle schema folders");
@@ -139,6 +121,10 @@ namespace SsmsSchemaFolders
 
                     switch (ssmsInterfacesVersion.FileMajorPart)
                     {
+                        case 21:
+                            debug_message("SsmsVersion:21");
+                            return new Ssms21::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
+
                         case 20:
                             debug_message("SsmsVersion:20");
                             return new Ssms20::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
@@ -151,26 +137,6 @@ namespace SsmsSchemaFolders
                         case 15:
                             debug_message("SsmsVersion:18");
                             return new Ssms18::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
-
-                        case 14:
-                            debug_message("SsmsVersion:2017");
-                            DelayAddSkipLoadingReg();
-                            return new Ssms2017::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
-
-                        case 13:
-                            debug_message("SsmsVersion:2016");
-                            DelayAddSkipLoadingReg();
-                            return new Ssms2016::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
-
-                        case 12:
-                            debug_message("SsmsVersion:2014");
-                            DelayAddSkipLoadingReg();
-                            return new Ssms2014::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
-
-                        case 11:
-                            debug_message("SsmsVersion:2012");
-                            DelayAddSkipLoadingReg();
-                            return new Ssms2012::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
 
                         default:
                             ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_INFORMATION, String.Format("SqlWorkbench.Interfaces.dll v{0}:{1}", ssmsInterfacesVersion.FileMajorPart, ssmsInterfacesVersion.FileMinorPart));
@@ -396,7 +362,6 @@ namespace SsmsSchemaFolders
         {
             debug_message(message);
 
-            // Logs to %AppData%\Microsoft\VisualStudio\14.0\ActivityLog.XML.
             // Logs to %AppData%\Microsoft\AppEnv\15.0\ActivityLog.XML.
             // Recommended to obtain the activity log just before writing to it. Do not cache or save the activity log for future use.
             var log = GetService(typeof(SVsActivityLog)) as IVsActivityLog;
