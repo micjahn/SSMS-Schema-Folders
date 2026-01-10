@@ -3,6 +3,7 @@ SsmsSchemaFolders.Ssms18.dll
 SsmsSchemaFolders.Ssms19.dll
 SsmsSchemaFolders.Ssms20.dll
 SsmsSchemaFolders.Ssms21.dll
+SsmsSchemaFolders.Ssms22.dll
 SsmsSchemaFolders.dll
 SsmsSchemaFolders.pkgdef
 extension.vsixmanifest

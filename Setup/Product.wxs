@@ -25,6 +25,7 @@
     <PropertyRef Id="SSMS19INSTALLROOT" />
     <PropertyRef Id="SSMS20INSTALLROOT" />
     <PropertyRef Id="SSMS21INSTALLROOT" />
+    <PropertyRef Id="SSMS22INSTALLROOT" />
 
     <Media Id="1" Cabinet="media.cab" EmbedCab="yes" CompressionLevel="high" />
     
@@ -38,7 +39,12 @@
 
     <InstallUISequence>
       <Custom Action="Runvswhere_ssms21_vbs" After="AppSearch">NOT Installed OR REINSTALL</Custom>
+      <Custom Action="Runvswhere_ssms22_vbs" After="AppSearch">NOT Installed OR REINSTALL</Custom>
     </InstallUISequence>
+    <InstallExecuteSequence>
+      <Custom Action="Runtouchfile_ssms21_vbs" After="InstallFiles" />
+      <Custom Action="Runtouchfile_ssms22_vbs" After="InstallFiles" />
+    </InstallExecuteSequence>
     
     <!-- directories -->
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -87,6 +93,16 @@
           </Directory>
         </Directory>
       </Directory>
+      <Directory Id="SSMS22INSTALLROOT" Name="[SSMS22INSTALLROOT]">
+        <Directory Id="SSMS22.Common7" Name="Common7">
+          <Directory Id="SSMS22.IDE" Name="IDE">
+            <Directory Id="SSMS22.Extensions" Name="Extensions">
+              <Directory Id="SSMS22.Extensions.DF" Name="Community">
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
     </Directory>
 
     <!-- files -->
@@ -102,6 +118,9 @@
       </Component>
       <Component Id="Files.Ssms21" Guid="{88C5EFCD-A250-40BB-9DC2-7E82A766DBCE}">
         <File Id="File.Ssms21" Source="$(var.SsmsSchemaFolders.Ssms21.TargetPath)" />
+      </Component>
+      <Component Id="Files.Ssms22" Guid="{4C7FA1E7-263F-4724-A02F-FA3214C5C0CE}">
+        <File Id="File.Ssms22" Source="$(var.SsmsSchemaFolders.Ssms22.TargetPath)" />
       </Component>
       <Component Id="Files.Interfaces" Guid="{4F5C1491-E103-4AE5-98B6-746DA85BC2BB}">
         <File Id="File.Interfaces" Source="$(var.SsmsSchemaFolders.Interfaces.TargetPath)" />
@@ -175,6 +194,20 @@
       </Component>
     </DirectoryRef>
 
+    <DirectoryRef Id="SSMS22.Extensions.DF">
+      <Component Id="Files.Ssms22.Package" Guid="{8238B53E-099B-424B-9DA8-28506B24CBCA}" Win64="yes">
+        <File Id="File.Ssms22.pkgdef" Source="$(var.SsmsSchemaFolders.VSPackage.TargetDir)SsmsSchemaFolders.pkgdef" />
+        <IniFile Id="Ini22"
+                 Action="addLine"
+                 Directory="SSMS22.Extensions.DF"
+                 Section="$RootKey$\Packages\{a88a775f-7c86-4a09-b5a6-890c4c38261b}"
+                 Name="SsmsSchemaFolders.pkgdef"
+                 Key="&quot;CodeBase&quot;"
+                 Value="&quot;[INSTALLLOCATION]$(var.SsmsSchemaFolders.VSPackage.TargetFileName)&quot;" />
+        <Condition>SSMS22INSTALLROOT</Condition>
+      </Component>
+    </DirectoryRef>
+
     <!-- features -->
     <Feature Id="CompleteInstall" Title="$(var.ProductName)" Level="1" InstallDefault="local" AllowAdvertise="no">
       <Feature Id="Ssms18Features" Title="Microsoft SQL Management Studio 18" Level="1"
@@ -185,6 +218,7 @@
         <ComponentRef Id="Files.Ssms19" />
         <ComponentRef Id="Files.Ssms20" />
         <ComponentRef Id="Files.Ssms21" />
+        <ComponentRef Id="Files.Ssms22" />
         <ComponentRef Id="Files.Interfaces" />
         <ComponentRef Id="Files.VSPackage" />
         <ComponentRef Id="Files.VSPackage.de" />
@@ -198,6 +232,7 @@
         <ComponentRef Id="Files.Ssms19" />
         <ComponentRef Id="Files.Ssms20" />
         <ComponentRef Id="Files.Ssms21" />
+        <ComponentRef Id="Files.Ssms22" />
         <ComponentRef Id="Files.Interfaces" />
         <ComponentRef Id="Files.VSPackage" />
         <ComponentRef Id="Files.VSPackage.de" />
@@ -211,6 +246,7 @@
         <ComponentRef Id="Files.Ssms19" />
         <ComponentRef Id="Files.Ssms20" />
         <ComponentRef Id="Files.Ssms21" />
+        <ComponentRef Id="Files.Ssms22" />
         <ComponentRef Id="Files.Interfaces" />
         <ComponentRef Id="Files.VSPackage" />
         <ComponentRef Id="Files.VSPackage.de" />
@@ -224,10 +260,25 @@
         <ComponentRef Id="Files.Ssms19" />
         <ComponentRef Id="Files.Ssms20" />
         <ComponentRef Id="Files.Ssms21" />
+        <ComponentRef Id="Files.Ssms22" />
         <ComponentRef Id="Files.Interfaces" />
         <ComponentRef Id="Files.VSPackage" />
         <ComponentRef Id="Files.VSPackage.de" />
         <ComponentRef Id="Files.Ssms21.Package" />
+      </Feature>
+      <Feature Id="Ssms22Features" Title="Microsoft SQL Management Studio 22" Level="1"
+               Description="!(loc.DescriptionFeatureSsms22)"
+               InstallDefault="local" AllowAdvertise="no" TypicalDefault="install">
+
+        <ComponentRef Id="Files.Ssms18" />
+        <ComponentRef Id="Files.Ssms19" />
+        <ComponentRef Id="Files.Ssms20" />
+        <ComponentRef Id="Files.Ssms21" />
+        <ComponentRef Id="Files.Ssms22" />
+        <ComponentRef Id="Files.Interfaces" />
+        <ComponentRef Id="Files.VSPackage" />
+        <ComponentRef Id="Files.VSPackage.de" />
+        <ComponentRef Id="Files.Ssms22.Package" />
       </Feature>
 
     </Feature>

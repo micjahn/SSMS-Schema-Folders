@@ -10,7 +10,7 @@ Source code, documentation and issues can be found at <https://github.com/micjah
 This is a fork of [SSMS-Schema-Folders](https://github.com/nicholas-ross/SSMS-Schema-Folders)
 which is a fork of [SSMS2012Extender](https://github.com/NotExperiencedDev/SSMSExtension) (from when it was on CodePlex) that adds support for later SSMS versions.
 
-You can download the latest version of SSMS for free from [Microsoft](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms).
+You can download the latest version of SSMS for free from [Microsoft](https://learn.microsoft.com/en-us/ssms/install/install).
 
 
 ## Install
@@ -30,6 +30,7 @@ SSMS allows installing in a different location. The default paths are listed bel
 * 19 - `C:\Program Files (x86)\Microsoft SQL Server Management Studio 19\Common7\IDE\Extensions`
 * 20 - `C:\Program Files (x86)\Microsoft SQL Server Management Studio 20\Common7\IDE\Extensions`
 * 21 - `C:\Program Files\Microsoft SQL Server Management Studio 21\Release\Common7\IDE\Extensions`
+* 22 - `C:\Program Files\Microsoft SQL Server Management Studio 22\Release\Common7\IDE\Extensions`
 
 SSMS 18 and above allow installing in a different location. If the path above does not exist then you need to find the correct path to use.
 
@@ -68,6 +69,9 @@ This extension moves nodes in the Object Explorer tree view. This could cause pr
 Please report any issues to <https://github.com/micjahn/SSMS-Schema-Folders/issues>.
 
 ## Change Log MJ fork
+
+### v1.8 (2026-01-10)
+* Added support for v22.
 
 ### v1.7 (2025-08-24)
 * Added support for v21.
